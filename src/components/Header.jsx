@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 const Header = () => {
   return (
-    <Navbar bg="primary" variant="dark">
+    <Navbar bg="info" variant="dark">
       <Navbar.Brand href="#home">PetServices</Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link href="#home">Dono</Nav.Link>

@@ -22,9 +22,9 @@ const OwnerComponent = ({ submitOwner }) => {
       <Container>
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
-            <Jumbotron className='bg-white'>
+            <Jumbotron className="bg-white">
               <Form>
-                <h2>Cadastro</h2>
+                <br />
                 <Form.Group>
                   <Form.Label>Nome Completo</Form.Label>
                   <Form.Control
@@ -35,29 +35,36 @@ const OwnerComponent = ({ submitOwner }) => {
                     }}
                   />
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>CPF</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="ownerCpf"
-                    onChange={(e) => {
-                      setOwnerCpf(e.target.value);
-                    }}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formNascimento">
-                  <Form.Label>Data de Nascimento</Form.Label>
-                  <Form.Control
-                    type="date"
-                    name="ownerData"
-                    onChange={(e) => {
-                      setOwnerData(e.target.value);
-                    }}
-                  />
-                </Form.Group>
+                <Row>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>CPF</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="ownerCpf"
+                        onChange={(e) => {
+                          setOwnerCpf(e.target.value);
+                        }}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col>
+                    <Form.Group>
+                      <Form.Label>Data de Nascimento</Form.Label>
+                      <Form.Control
+                        type="date"
+                        name="ownerData"
+                        onChange={(e) => {
+                          setOwnerData(e.target.value);
+                        }}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+
                 <Form.Row>
                   <Form.Group as={Col} controlId="formGridSex">
-                    <Form.Label>Sex</Form.Label>
+                    <Form.Label>Sexo</Form.Label>
                     <Form.Check
                       type="radio"
                       label="Masculino"
@@ -80,7 +87,11 @@ const OwnerComponent = ({ submitOwner }) => {
                     />
                   </Form.Group>
                 </Form.Row>
-                <Button variant="primary" type="submit" onClick={handleSubmitOwner}>
+                <Button
+                  variant="info"
+                  type="submit"
+                  onClick={handleSubmitOwner}
+                >
                   Cadastrar
                 </Button>
               </Form>

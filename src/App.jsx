@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import OwnerComponent from "./components/OwnerComponent";
 import OwnerList from "./components/OwnerList";
 
-
 function App() {
   // const [ownerName, setOwnerName] = useState("");
   // const [ownerCpf, setOwnerCpf] = useState("");
@@ -51,19 +50,38 @@ function App() {
     setOwnerList(newOwners);
   };
 
-  // const updateOwner = (owner) => {
-  //   Axios.put("http://localhost:3000/v1/owners/", {
-  //     cpf: ownerCpf,
-  //     nome: ownerName,
-  //     data_nascimento: ownerData,
-  //     sexo: ownerSexo,
-  //   });
+  const updateOwner = (name, cpf, data, sexo) => {
+    Axios.put(`http://localhost:3000/v1/owners/${cpf}`, {
+      cpf: cpf,
+      nome: name,
+      data_nascimento: data,
+      sexo: sexo,
+    });
+
+    alert("Owner atualizado com sucesso!");
+    const newOwners = ownerList.filter((owner) => owner.cpf != cpf);
+    setOwnerList(newOwners);
+    setOwnerList([
+      ...newOwners,
+      {
+        cpf: cpf,
+        nome: name,
+        data_nascimento: data,
+        sexo: sexo,
+      },
+    ]);
+
+  };
 
   return (
     <div className="App">
       <Header />
-      <OwnerComponent submitOwner={submitOwner}/>
-      <OwnerList owners={ownerList} deleteOwner={deleteOwner}/>
+      <OwnerComponent submitOwner={submitOwner} />
+      <OwnerList
+        owners={ownerList}
+        updateOwner={updateOwner}
+        deleteOwner={deleteOwner}
+      />
     </div>
   );
 }
