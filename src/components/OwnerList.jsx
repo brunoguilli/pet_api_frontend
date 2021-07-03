@@ -4,9 +4,10 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Modal from "react-modal";
+import OwnerComponent from "./OwnerComponent";
 import "./Dialog.css";
 
-const OwnerList = ({ owners, updateOwner, deleteOwner }) => {
+const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [ownerName, setOwnerName] = useState("");
   const [ownerCpf, setOwnerCpf] = useState("");
@@ -20,6 +21,10 @@ const OwnerList = ({ owners, updateOwner, deleteOwner }) => {
     setOwnerSexo(value.sexo);
   };
 
+  const handleGetOwnerByCpf = () => {
+    getOwnerByCpf(ownerCpf);
+  };
+
   const handleUpdateOwner = () => {
     updateOwner(ownerName, ownerCpf, ownerData, ownerSexo);
   };
@@ -29,10 +34,12 @@ const OwnerList = ({ owners, updateOwner, deleteOwner }) => {
 
   return (
     <Container>
+
       <Modal className="custom-dialog" isOpen={modalIsOpen}>
-        <div className="header-dialog"></div>
+        {/* <div className="header-dialog"></div> */}
         <Container className="container-dialog">
-          <input
+          <OwnerComponent />
+          {/* <input
             type="text"
             value={ownerName}
             onChange={(e) => {
@@ -59,15 +66,34 @@ const OwnerList = ({ owners, updateOwner, deleteOwner }) => {
             onChange={(e) => {
               setOwnerSexo(e.target.value);
             }}
-          />
+          /> */}
+
           <Button variant="primary" onClick={() => setModalIsOpen(false)}>
             Voltar
           </Button>
           <Button variant="primary" onClick={handleUpdateOwner}>
             Salvar
           </Button>
+
         </Container>
       </Modal>
+
+      <Container>
+        <Row className="mb-5">
+          <input
+            type="text"
+            style={{ width: "30%" }}
+            className="ml-0"
+            placeholder="Informe o CPF"
+            onChange={(e) => {
+              setOwnerCpf(e.target.value);
+            }}
+          />
+          <Button variant="white" onClick={handleGetOwnerByCpf}>
+            <i class="fas fa-search text-info"></i>
+          </Button>
+        </Row>
+      </Container>
 
       <Row className="bg-light">
         <Col>

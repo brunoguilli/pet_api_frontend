@@ -18,7 +18,7 @@ const OwnerComponent = ({ submitOwner }) => {
 
   return (
     <>
-      <br />
+      {/* <br /> */}
       <Container>
         <Row>
           <Col md={{ span: 8, offset: 2 }}>

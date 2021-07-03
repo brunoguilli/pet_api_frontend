@@ -4,6 +4,7 @@ import Axios from "axios";
 import Header from "./components/Header";
 import OwnerComponent from "./components/OwnerComponent";
 import OwnerList from "./components/OwnerList";
+import Footer from "./components/Footer";
 
 function App() {
   // const [ownerName, setOwnerName] = useState("");
@@ -50,6 +51,19 @@ function App() {
     setOwnerList(newOwners);
   };
 
+  const getOwnerByCpf = (cpf) => {
+    console.log("cpf -> " + cpf);
+    if (!!cpf) {
+      console.log("2cpf -> " + cpf);
+      const owner = ownerList.filter((owner) => owner.cpf == cpf);
+      setOwnerList(owner);
+    } else {
+      Axios.get("http://localhost:3000/v1/owners").then((response) => {
+        setOwnerList(response.data);
+      });
+    }
+  };
+
   const updateOwner = (name, cpf, data, sexo) => {
     Axios.put(`http://localhost:3000/v1/owners/${cpf}`, {
       cpf: cpf,
@@ -70,7 +84,6 @@ function App() {
         sexo: sexo,
       },
     ]);
-
   };
 
   return (
@@ -81,7 +94,9 @@ function App() {
         owners={ownerList}
         updateOwner={updateOwner}
         deleteOwner={deleteOwner}
+        getOwnerByCpf={getOwnerByCpf}
       />
+      <Footer />
     </div>
   );
 }
