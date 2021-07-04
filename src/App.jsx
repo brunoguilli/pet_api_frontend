@@ -89,7 +89,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <OwnerComponent submitOwner={submitOwner} />
+      <OwnerComponent submitOwner={submitOwner} operationType={"Cadastrar"} />
       <OwnerList
         owners={ownerList}
         updateOwner={updateOwner}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { format } from "date-fns";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -14,19 +15,27 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
   const [ownerData, setOwnerData] = useState("");
   const [ownerSexo, setOwnerSexo] = useState("");
 
+  const [checkedMale, setCheckedMale] = useState(false);
+  const [checkedFemale, setCheckedFemale] = useState(false);
+
   const setOwnerValues = (value) => {
     setOwnerName(value.nome);
     setOwnerCpf(value.cpf);
-    setOwnerData(value.data_nascimento);
+    var date = new Date(value.data_nascimento);
+    var formattedDate = format(date, "yyyy-MM-dd");
+    setOwnerData(formattedDate);
     setOwnerSexo(value.sexo);
+    if (value.sexo == "M") {
+      setCheckedMale(true);
+      setCheckedFemale(false);
+    } else {
+      setCheckedFemale(true);
+      setCheckedMale(false);
+    }
   };
 
   const handleGetOwnerByCpf = () => {
     getOwnerByCpf(ownerCpf);
-  };
-
-  const handleUpdateOwner = () => {
-    updateOwner(ownerName, ownerCpf, ownerData, ownerSexo);
   };
 
   let bg = "bg-light";
@@ -34,47 +43,25 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
 
   return (
     <Container>
-
       <Modal className="custom-dialog" isOpen={modalIsOpen}>
-        {/* <div className="header-dialog"></div> */}
         <Container className="container-dialog">
-          <OwnerComponent />
-          {/* <input
-            type="text"
-            value={ownerName}
-            onChange={(e) => {
-              setOwnerName(e.target.value);
-            }}
+          <h3 style={{textAlign:"center", fontSize: 22}}>Alterar Registro</h3>
+          <OwnerComponent
+            ownerNameUpdate={ownerName}
+            ownerCpfUpdate={ownerCpf}
+            ownerDataUpdate={ownerData}
+            ownerSexoUpdate={ownerSexo}
+            checkedMale={checkedMale}
+            checkedFemale={checkedFemale}
+            operationType={"Atualizar"}
+            updateOwner={updateOwner}
           />
-          <input
-            type="text"
-            value={ownerCpf}
-            onChange={(e) => {
-              setOwnerCpf(e.target.value);
-            }}
-          />
-          <input
-            type="date"
-            value={ownerData}
-            onChange={(e) => {
-              setOwnerData(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            value={ownerSexo}
-            onChange={(e) => {
-              setOwnerSexo(e.target.value);
-            }}
-          /> */}
 
-          <Button variant="primary" onClick={() => setModalIsOpen(false)}>
-            Voltar
-          </Button>
-          <Button variant="primary" onClick={handleUpdateOwner}>
-            Salvar
-          </Button>
-
+          <a className="link"
+            class="fas fa-times text-danger ml-3 mb-1"
+            style={{ height: 50, fontSize: 40 }}
+            onClick={() => setModalIsOpen(false)}
+          ></a>
         </Container>
       </Modal>
 
@@ -123,6 +110,8 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
         } else {
           bg = "bg-withe";
         }
+        var date = new Date(value.data_nascimento);
+        var formattedDate = format(date, "dd/MM/yyyy");
 
         return (
           <div className="form">
@@ -134,7 +123,7 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
                 <p>{value.cpf}</p>
               </Col>
               <Col>
-                <p>{value.data_nascimento}</p>
+                <p>{formattedDate}</p>
               </Col>
               <Col>
                 <p>{value.sexo}</p>

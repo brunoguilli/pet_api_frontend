@@ -3,16 +3,25 @@
     height: 50%;
     margin: auto;
     margin-top: 10%;
-    background-color: rgb(46, 148, 131);
+    /* background-color: rgb(46, 148, 131); */
+    
 }
 
 .container-dialog {
-    width: 80%;
-    height: 80%;
+    /* width: 80%; */
+    /* height: 80%; */
+    padding-top: 8%;
     margin: auto;
-    background-color: aquamarine;
+    background-color: white;
+    border-radius: 25px;
+    border: 2px solid #bbd1d1;
 }
 
 .header-dialog {
     height: 50px;
+}
+
+.link{
+    color: aliceblue;
+    text-decoration: none;
 }

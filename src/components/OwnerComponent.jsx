@@ -6,30 +6,52 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const OwnerComponent = ({ submitOwner }) => {
-  const [ownerName, setOwnerName] = useState("");
-  const [ownerCpf, setOwnerCpf] = useState("");
-  const [ownerData, setOwnerData] = useState("");
-  const [ownerSexo, setOwnerSexo] = useState("");
+const OwnerComponent = ({
+  submitOwner,
+  ownerNameUpdate,
+  ownerCpfUpdate,
+  ownerDataUpdate,
+  ownerSexoUpdate,
+  checkedMale,
+  checkedFemale,
+  operationType,
+  updateOwner,
+}) => {
+  const [operation, setOperationType] = useState(operationType);
+  const [ownerName, setOwnerName] = useState(ownerNameUpdate);
+  const [ownerCpf, setOwnerCpf] = useState(ownerCpfUpdate);
+  const [ownerData, setOwnerData] = useState(ownerDataUpdate);
+  const [ownerSexo, setOwnerSexo] = useState(ownerSexoUpdate);
 
   const handleSubmitOwner = () => {
     submitOwner(ownerName, ownerCpf, ownerData, ownerSexo);
   };
 
+  const handleUpdateOwner = () => {
+    updateOwner(ownerName, ownerCpf, ownerData, ownerSexo);
+  };
+
+  const handleOperationSubmit = () => {
+    if (operation == "Cadastrar") {
+      handleSubmitOwner();
+    } else if (operation == "Atualizar") {
+      handleUpdateOwner();
+    }
+  };
+
   return (
     <>
-      {/* <br /> */}
       <Container>
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
             <Jumbotron className="bg-white">
               <Form>
-                <br />
                 <Form.Group>
                   <Form.Label>Nome Completo</Form.Label>
                   <Form.Control
                     type="text"
                     name="ownerName"
+                    value={ownerName}
                     onChange={(e) => {
                       setOwnerName(e.target.value);
                     }}
@@ -42,6 +64,7 @@ const OwnerComponent = ({ submitOwner }) => {
                       <Form.Control
                         type="text"
                         name="ownerCpf"
+                        value={ownerCpf}
                         onChange={(e) => {
                           setOwnerCpf(e.target.value);
                         }}
@@ -54,6 +77,7 @@ const OwnerComponent = ({ submitOwner }) => {
                       <Form.Control
                         type="date"
                         name="ownerData"
+                        value={ownerData}
                         onChange={(e) => {
                           setOwnerData(e.target.value);
                         }}
@@ -71,6 +95,7 @@ const OwnerComponent = ({ submitOwner }) => {
                       name="formHoriRadios"
                       ids="formHoriRadios1"
                       value="M"
+                      checked={checkedMale}
                       onChange={(e) => {
                         setOwnerSexo(e.target.value);
                       }}
@@ -81,6 +106,7 @@ const OwnerComponent = ({ submitOwner }) => {
                       name="formHoriRadios"
                       ids="formHoriRadios1"
                       value="F"
+                      checked={checkedFemale}
                       onChange={(e) => {
                         setOwnerSexo(e.target.value);
                       }}
@@ -90,9 +116,9 @@ const OwnerComponent = ({ submitOwner }) => {
                 <Button
                   variant="info"
                   type="submit"
-                  onClick={handleSubmitOwner}
+                  onClick={handleOperationSubmit}
                 >
-                  Cadastrar
+                  {operation}
                 </Button>
               </Form>
             </Jumbotron>
