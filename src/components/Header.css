@@ -1,0 +1,12 @@
+.link {
+    margin-right: 10px;
+}
+
+.link:hover{
+    text-decoration: none;
+}
+
+.icon {
+    font-size: 80px;
+    margin-top: 50px;
+}

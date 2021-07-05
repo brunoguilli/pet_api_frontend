@@ -6,16 +6,16 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const OwnerComponent = ({
+const OwnerForm = ({
   submitOwner,
   ownerNameUpdate,
   ownerCpfUpdate,
   ownerDataUpdate,
   ownerSexoUpdate,
-  checkedMale,
-  checkedFemale,
   operationType,
   updateOwner,
+  checkedFemale,
+  checkedMale
 }) => {
   const [operation, setOperationType] = useState(operationType);
   const [ownerName, setOwnerName] = useState(ownerNameUpdate);
@@ -38,7 +38,6 @@ const OwnerComponent = ({
       handleUpdateOwner();
     }
   };
-
   return (
     <>
       <Container>
@@ -129,4 +128,4 @@ const OwnerComponent = ({
   );
 };
 
-export default OwnerComponent;
+export default OwnerForm;

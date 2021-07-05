@@ -5,26 +5,29 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Modal from "react-modal";
-import OwnerComponent from "./OwnerComponent";
 import "./Dialog.css";
+import PetForm from "./PetForm";
 
-const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
+const PetList = ({ pets, updatePet, deletePet, getPetById }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [ownerName, setOwnerName] = useState("");
-  const [ownerCpf, setOwnerCpf] = useState("");
-  const [ownerData, setOwnerData] = useState("");
-  const [ownerSexo, setOwnerSexo] = useState("");
-
+  const [petName, setPetName] = useState("");
+  const [petRaca, setPetRaca] = useState("");
+  const [petData, setPetData] = useState("");
+  const [petSexo, setPetSexo] = useState("");
+  const [petTipoAnimalUpdate, setPetTipoAnimalUpdate] = useState("");
+  const [petId, setPetId] = useState("");
   const [checkedMale, setCheckedMale] = useState(false);
   const [checkedFemale, setCheckedFemale] = useState(false);
 
-  const setOwnerValues = (value) => {
-    setOwnerName(value.nome);
-    setOwnerCpf(value.cpf);
+  const setPetValues = (value) => {
+    setPetName(value.nome);
+    setPetRaca(value.raca);
+    setPetId(value.id);
     var date = new Date(value.data_nascimento);
     var formattedDate = format(date, "yyyy-MM-dd");
-    setOwnerData(formattedDate);
-    setOwnerSexo(value.sexo);
+    setPetData(formattedDate);
+    setPetSexo(value.sexo);
+    setPetTipoAnimalUpdate(value.tipo_animal);
     if (value.sexo == "M") {
       setCheckedMale(true);
       setCheckedFemale(false);
@@ -34,8 +37,8 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
     }
   };
 
-  const handleGetOwnerByCpf = () => {
-    getOwnerByCpf(ownerCpf);
+  const handleGetPetById = () => {
+    getPetById(petId);
   };
 
   let bg = "bg-light";
@@ -45,19 +48,24 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
     <Container>
       <Modal className="custom-dialog" isOpen={modalIsOpen}>
         <Container className="container-dialog">
-          <h3 style={{textAlign:"center", fontSize: 22}}>Alterar Registro</h3>
-          <OwnerComponent
-            ownerNameUpdate={ownerName}
-            ownerCpfUpdate={ownerCpf}
-            ownerDataUpdate={ownerData}
-            ownerSexoUpdate={ownerSexo}
+          <h3 style={{ textAlign: "center", fontSize: 22 }}>
+            Alterar Registro
+          </h3>
+          <PetForm
+            petNameUpdate={petName}
+            petRacaUpdate={petRaca}
+            petDataUpdate={petData}
+            petSexoUpdate={petSexo}
+            petTipoAnimalUpdate={petTipoAnimalUpdate}
+            petIdUpdate={petId}
             checkedMale={checkedMale}
             checkedFemale={checkedFemale}
             operationType={"Atualizar"}
-            updateOwner={updateOwner}
+            updatePet={updatePet}
           />
 
-          <a className="link"
+          <a
+            className="link"
             class="fas fa-times text-danger ml-3 mb-1"
             style={{ height: 50, fontSize: 40 }}
             onClick={() => setModalIsOpen(false)}
@@ -71,12 +79,12 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
             type="text"
             style={{ width: "30%" }}
             className="ml-0"
-            placeholder="Informe o CPF"
+            placeholder="Informe o ID"
             onChange={(e) => {
-              setOwnerCpf(e.target.value);
+              setPetId(e.target.value);
             }}
           />
-          <Button variant="white" onClick={handleGetOwnerByCpf}>
+          <Button variant="white" onClick={handleGetPetById}>
             <i class="fas fa-search text-info"></i>
           </Button>
         </Row>
@@ -84,10 +92,16 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
 
       <Row className="bg-light">
         <Col>
+          <p>ID</p>
+        </Col>
+        <Col>
           <p>Nome</p>
         </Col>
         <Col>
-          <p>CPF</p>
+          <p>Tipo</p>
+        </Col>
+        <Col>
+          <p>Raça</p>
         </Col>
         <Col>
           <p>Data Nascimento</p>
@@ -103,7 +117,7 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
         </Col>
       </Row>
 
-      {owners.map((value) => {
+      {pets.map((value) => {
         cont++;
         if (cont % 2 == 0) {
           bg = "bg-light";
@@ -112,15 +126,28 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
         }
         var date = new Date(value.data_nascimento);
         var formattedDate = format(date, "dd/MM/yyyy");
+        var tipoAnimal;
+
+        if(value.tipo_animal == 1 ){
+            tipoAnimal = "Cachorro";
+        } else {
+            tipoAnimal = "Gato";
+        }
 
         return (
           <div className="form">
             <Row className={bg}>
               <Col>
+                <p>{value.id}</p>
+              </Col>
+              <Col>
                 <p>{value.nome}</p>
               </Col>
               <Col>
-                <p>{value.cpf}</p>
+                <p>{tipoAnimal}</p>
+              </Col>
+              <Col>
+                <p>{value.raca}</p>
               </Col>
               <Col>
                 <p>{formattedDate}</p>
@@ -132,7 +159,7 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
                 <Button
                   variant="danger"
                   onClick={() => {
-                    deleteOwner(value.cpf);
+                    deletePet(value.id);
                   }}
                 >
                   <i class="fas fa-trash-alt"></i>
@@ -143,7 +170,7 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
                   variant="info"
                   onClick={() => {
                     setModalIsOpen(true);
-                    setOwnerValues(value);
+                    setPetValues(value);
                   }}
                 >
                   <i class="fas fa-edit"></i>
@@ -157,4 +184,4 @@ const OwnerList = ({ owners, updateOwner, deleteOwner, getOwnerByCpf }) => {
   );
 };
 
-export default OwnerList;
+export default PetList;
