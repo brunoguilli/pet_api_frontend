@@ -15,7 +15,7 @@ const OwnerForm = ({
   operationType,
   updateOwner,
   checkedFemale,
-  checkedMale
+  checkedMale,
 }) => {
   const [operation, setOperationType] = useState(operationType);
   const [ownerName, setOwnerName] = useState(ownerNameUpdate);
@@ -85,7 +85,24 @@ const OwnerForm = ({
                   </Col>
                 </Row>
 
-                <Form.Row>
+                <Row>
+                  <Form.Group as={Col} controlId="formGridOwnerSex">
+                    <Form.Label>Sexo</Form.Label>
+                    <Form.Control
+                      as="select"
+                      onChange={(e) => {
+                        setOwnerSexo(e.target.value);
+                      }}
+                      defaultValue={ownerSexo}
+                    >
+                      <option>Escolha...</option>
+                      <option value="M">Masculino</option>
+                      <option value="F">Feminino</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Row>
+
+                {/* <Form.Row>
                   <Form.Group as={Col} controlId="formGridSex">
                     <Form.Label>Sexo</Form.Label>
                     <Form.Check
@@ -111,12 +128,13 @@ const OwnerForm = ({
                       }}
                     />
                   </Form.Group>
-                </Form.Row>
+                </Form.Row> */}
                 <Button
                   variant="info"
                   type="submit"
                   onClick={handleOperationSubmit}
                 >
+                  <i class="fas fa-save mr-2"></i>
                   {operation}
                 </Button>
               </Form>

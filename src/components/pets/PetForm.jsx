@@ -16,8 +16,6 @@ const PetForm = ({
   petIdUpdate,
   operationType,
   updatePet,
-  checkedFemale,
-  checkedMale,
 }) => {
   const [operation, setOperationType] = useState(operationType);
   const [petName, setPetName] = useState(petNameUpdate);
@@ -107,38 +105,29 @@ const PetForm = ({
                   </Form.Group>
                 </Row>
 
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridSex">
+                <Row>
+                  <Form.Group as={Col} controlId="formGridTypeAnimal">
                     <Form.Label>Sexo</Form.Label>
-                    <Form.Check
-                      type="radio"
-                      label="Macho"
-                      name="formHoriRadios"
-                      ids="formHoriRadios1"
-                      value="M"
-                      checked={checkedMale}
+                    <Form.Control
+                      as="select"
                       onChange={(e) => {
                         setPetSexo(e.target.value);
                       }}
-                    />
-                    <Form.Check
-                      type="radio"
-                      label="Fêmea"
-                      name="formHoriRadios"
-                      ids="formHoriRadios1"
-                      value="F"
-                      checked={checkedFemale}
-                      onChange={(e) => {
-                        setPetSexo(e.target.value);
-                      }}
-                    />
+                      defaultValue={petSexo}
+                    >
+                      <option>Escolha...</option>
+                      <option value="M">Macho</option>
+                      <option value="F">Fêmea</option>
+                    </Form.Control>
                   </Form.Group>
-                </Form.Row>
+                </Row>
+
                 <Button
                   variant="info"
                   type="submit"
                   onClick={handleOperationSubmit}
                 >
+                  <i class="fas fa-save mr-2"></i>
                   {operation}
                 </Button>
               </Form>

@@ -8,13 +8,16 @@ import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import OwnerComponent from "./owner/OwnerComponent";
 import PetComponent from "./pets/PetComponent";
 import "./Header.css";
+import PetOwnerComponent from "./PetOwner/PetOwnerComponent";
 
 const Header = () => {
   return (
     <BrowserRouter>
       <Navbar bg="info" variant="dark">
         <NavLink className="link" to="/">
-          <Navbar.Brand href="#home">PetServices</Navbar.Brand>
+          <Navbar.Brand href="#home">
+            <i class="fas fa-bone mr-2"></i>PetServices
+          </Navbar.Brand>
         </NavLink>
 
         <Nav className="mr-auto">
@@ -29,8 +32,12 @@ const Header = () => {
           </NavLink>
         </Nav>
         <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-light">Search</Button>
+          <FormControl
+            type="text"
+            placeholder="Pesquisar"
+            className="mr-sm-2"
+          />
+          <Button variant="outline-light">Pesquisar</Button>
         </Form>
       </Navbar>
 
@@ -55,6 +62,19 @@ const Header = () => {
               <i class="fas fa-paw icon text-info"></i>
             </h1>
             <PetComponent />
+          </>
+        )}
+      />
+      <Route
+        path="/donopet"
+        exact
+        render={() => (
+          <>
+            <h1>
+              <i class="fas icon text-info fa-cat"></i>
+              <i class="fas icon text-info fa-dog"></i>
+            </h1>
+            <PetOwnerComponent />
           </>
         )}
       />
